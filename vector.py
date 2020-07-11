@@ -1,3 +1,5 @@
+import math
+
 class Vector(object):
     def __init__(self, coordinates):
         try:
@@ -38,3 +40,9 @@ class Vector(object):
     def scale(self, s):
         new_coordinates = [x * s for x in self.coordinates]
         return Vector(new_coordinates)
+
+    def magnitude(self):
+        return math.sqrt(sum([ math.pow(x, 2) for x in self.coordinates ]))
+
+    def normalize(self):
+        return self.scale(1 / self.magnitude())
