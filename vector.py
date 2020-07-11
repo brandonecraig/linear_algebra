@@ -44,5 +44,9 @@ class Vector(object):
     def magnitude(self):
         return math.sqrt(sum([ math.pow(x, 2) for x in self.coordinates ]))
 
-    def normalize(self):
-        return self.scale(1 / self.magnitude())
+    def normalized(self):
+        try:
+            return self.scale(1.0 / self.magnitude())
+
+        except ZeroDivisionError:
+            raise Exception('Cannot normalize the zero vector')
