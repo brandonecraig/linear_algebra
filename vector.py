@@ -50,3 +50,19 @@ class Vector(object):
 
         except ZeroDivisionError:
             raise Exception('Cannot normalize the zero vector')
+
+    def dot(self, v):
+        if self.dimension != v.dimension:
+            raise ValueError('Vectors must have same dimension')
+        return sum([x * y for x,y in zip(self.coordinates, v.coordinates)])
+
+    def angle_with(self, v, in_degrees=False):
+        if self.dimension != v.dimension:
+            raise ValueError('Vectors must have same dimension')
+        radians = math.acos(self.normalized().dot(v.normalized()))
+
+        if in_degrees:
+            degrees_per_radians = 180.0 / math.pi
+            return radians * degrees_per_radians
+        else:
+            return radians
