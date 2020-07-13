@@ -66,3 +66,19 @@ class Vector(object):
             return radians * degrees_per_radians
         else:
             return radians
+
+    def is_zero(self, tolerance=1e-10):
+        return self.magnitude() < tolerance
+
+    def is_parallel_to(self, v):
+        if self.dimension != v.dimension:
+            raise ValueError('Vectors must have same dimension')
+        return ( self.is_zero() or
+                v.is_zero() or
+                self.angle_with(v) == 0 or
+                self.angle_with(v) == math.pi )
+
+    def is_orthogonal_to(self, v, tolerance=1e-10):
+        if self.dimension != v.dimension:
+            raise ValueError('Vectors must have same dimension')
+        return abs(self.dot(v)) < tolerance
