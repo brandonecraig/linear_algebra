@@ -51,6 +51,7 @@ class Vector(object):
         except ZeroDivisionError:
             raise Exception('Cannot normalize the zero vector')
 
+
     def dot(self, v):
         if self.dimension != v.dimension:
             raise ValueError('Vectors must have same dimension')
@@ -92,3 +93,20 @@ class Vector(object):
         u = basis.normalized()
         weight = self.dot(u)
         return u.scale(weight)
+
+    def cross(self, v):
+        if self.dimension != 3 or v.dimension != 3:
+            raise ValueError('Vectors must be three dimensional')
+        new_coordinates = [
+            self.coordinates[1] * v.coordinates[2] - v.coordinates[1] * self.coordinates[2],
+            -1 * (self.coordinates[0] * v.coordinates[2] - v.coordinates[0] * self.coordinates[2]),
+            self.coordinates[0] * v.coordinates[1] - v.coordinates[0] * self.coordinates[1],
+        ]
+        return Vector(new_coordinates)
+
+    def area_of_parallelogram_spanned(self, v):
+        cross = self.cross(v)
+        return cross.magnitude()
+
+    def area_of_triangle_spanned(self, v):
+        return self.area_of_parallelogram_spanned(self, v) / 2.0
