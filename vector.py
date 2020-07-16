@@ -82,3 +82,13 @@ class Vector(object):
         if self.dimension != v.dimension:
             raise ValueError('Vectors must have same dimension')
         return abs(self.dot(v)) < tolerance
+
+
+    def component_orthoganal_to(self, basis):
+        projection = self.component_parallel_to(basis)
+        return self - projection
+
+    def component_parallel_to(self, basis):
+        u = basis.normalized()
+        weight = self.dot(u)
+        return u.scale(weight)
